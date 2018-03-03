@@ -41,15 +41,16 @@ export default class AuthService {
   }
 
   setSession (authResult) {
-    console.log('authResult:')
-    console.log(authResult)
+    // console.log(authResult)
     // Set the time that the access token will expire at
     let expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     )
+    const user = authResult.idTokenPayload['https://semikomma.is/user']
     localStorage.setItem('access_token', authResult.accessToken)
     localStorage.setItem('id_token', authResult.idToken)
     localStorage.setItem('expires_at', expiresAt)
+    localStorage.setItem('user_info', JSON.stringify(user))
     this.authNotifier.emit('authChange', { authenticated: true })
   }
 
@@ -58,6 +59,7 @@ export default class AuthService {
     localStorage.removeItem('access_token')
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
+    localStorage.removeItem('user_info')
     this.userProfile = null
     this.authNotifier.emit('authChange', false)
     // navigate to the home route
