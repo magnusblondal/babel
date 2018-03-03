@@ -1,12 +1,9 @@
 <template>
   <div id="app">
     <div>
-      <!--a href="/home">Home</a>
-      <a-- href='/hello'>Hello</a-->
       <br/>
       <router-link to="/">Heim</router-link>
-      <router-link to="/hello">Hallo</router-link>
-      <router-link to="/callback">Callback</router-link>
+      <router-link v-if="authenticated" to="/peer">P2P</router-link>
       <button
         class="btn btn-primary btn-margin"
         v-if="!authenticated"
@@ -29,13 +26,12 @@
 </template>
 
 <script>
+
 import AuthService from './auth/AuthService'
 
 const auth = new AuthService()
 
 const { login, logout, authenticated, authNotifier } = auth
-
-console.log('--------------- ' + authenticated)
 
 export default {
   name: 'App',
