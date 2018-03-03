@@ -24,12 +24,10 @@ export default class AuthService {
   })
 
   login () {
-    console.log('auth: login')
     this.auth0.authorize()
   }
 
   handleAuthentication () {
-    console.log('auth: handleAuthentication')
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
